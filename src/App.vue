@@ -1,28 +1,34 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <h1>Ghibli Oeuvre</h1>
+    <choose-film-form :films="films"></choose-film-form>
+    <show-film-details></show-film-details>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ChooseFilmForm from './components/ChooseFilmForm';
+import ShowFilmDetails from './components/ShowFilmDetails';
 
 export default {
-  name: 'App',
+  data() {
+    return {
+      films: []
+    }
+  },
+  mounted() {
+    fetch('https://ghibliapi.herokuapp.com/films')
+    .then( response => response.json() )
+    .then( films => this.films = films )
+  },
   components: {
-    HelloWorld
+    'choose-film-form': ChooseFilmForm,
+    'show-film-details': ShowFilmDetails
   }
+
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
